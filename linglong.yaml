@@ -1,0 +1,98 @@
+package:
+  id: ffmpeg
+  version: 4.1.8
+  kind: lib
+
+base:
+  id: org.deepin.base
+  version: 20.5.0
+
+source:
+  kind: git
+  url: https://github.com/deepin-community/ffmpeg.git
+  version: 4.1.8
+  commit: 07c6f47fdd5fd055a6fd15e7748707459d4715f1
+  patch:
+  - 0001-avcodec-arm-sbcenc-avoid-callee-preserved-vfp-regist.patch
+  - 0002-configure-arm-Don-t-add-march-to-the-compiler-if-no-.patch
+build:
+  kind: manual
+  manual:
+    configure: |
+      mkdir build
+      cd build
+      ../configure --prefix=${PREFIX} \
+                   --extra-version=1+dde \
+                   --toolchain=hardened \
+                   --libdir=${PREFIX}/lib \
+                   --incdir=${PREFIX}/include \
+                   --arch=${ARCH} \
+                   --enable-gpl \
+                   --disable-stripping \
+                   --enable-avresample \
+                   --disable-filter=resample \
+                   --enable-avisynth \
+                   --enable-gnutls \
+                   --enable-ladspa \
+                   --enable-libaom \
+                   --enable-libass \
+                   --enable-libbluray \
+                   --enable-libbs2b \
+                   --enable-libcaca \
+                   --enable-libcdio \
+                   --enable-libcodec2 \
+                   --enable-libflite \
+                   --enable-libfontconfig \
+                   --enable-libfreetype \
+                   --enable-libfribidi \
+                   --enable-libgme \
+                   --enable-libgsm \
+                   --enable-libjack \
+                   --enable-libmp3lame \
+                   --enable-libmysofa \
+                   --enable-libopenjpeg \
+                   --enable-libopenmpt \
+                   --enable-libopus \
+                   --enable-libpulse \
+                   --enable-librsvg \
+                   --enable-librubberband \
+                   --enable-libshine \
+                   --enable-libsnappy \
+                   --enable-libsoxr \
+                   --enable-libspeex \
+                   --enable-libssh \
+                   --enable-libtheora \
+                   --enable-libtwolame \
+                   --enable-libvidstab \
+                   --enable-libvorbis \
+                   --enable-libvpx \
+                   --enable-libwavpack \
+                   --enable-libwebp \
+                   --enable-libx265 \
+                   --enable-libxml2 \
+                   --enable-libxvid \
+                   --enable-libzmq \
+                   --enable-libzvbi \
+                   --enable-lv2 \
+                   --enable-omx \
+                   --enable-ftomx \
+                   --enable-openal \
+                   --enable-opengl \
+                   --enable-sdl2 \
+                   --enable-vaapi \
+                   --enable-libdavs2 \
+                   --enable-libxavs2 \
+                   --enable-libdc1394 \
+                   --enable-libdrm \
+                   --enable-libiec61883 \
+                   --enable-chromaprint \
+                   --enable-frei0r \
+                   --enable-libx264 \
+                   --enable-shared \
+                   --disable-doc \
+                   --disable-htmlpages \
+                   --disable-manpages \
+                   --disable-podpages \
+                   --disable-txtpages 
+      make -j6
+      make -j install
